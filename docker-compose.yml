@@ -1,5 +1,13 @@
 version: "3.9"
 services:
+  prometheus:
+    image: "prom/prometheus"
+    build: .
+    restart: always
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./docker/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
   playqd-service-discovery:
     image: "playqd-service-discovery:1.0.0"
     build: .
