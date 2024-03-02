@@ -17,15 +17,17 @@ services:
     volumes:
       - ./docker/playqd-service-discovery:/app/playqd/config
   playqd-media-library:
-    image: "playqd-media-library:0.0.1"
+    image: "playqd-media-library:0.0.2"
     build: .
     restart: always
     ports:
       - "8015:8015"
     volumes:
-      - F:/Media/Music:/media/music
-      - C:/Users/gregory.kosik/.playqd:/.playqd
+      - ${hostMusicDir}:/media/music
+      - ${hostWorkingDir}:/.playqd
+      - ${hostWinampPlaylistsDir}:/media/playlists/winamp
     env_file:
       - .env
     environment:
-      - spring.datasource.password=${playqd_media_library_db_pwd}
+      - eureka.instance.hostname=${eurekaInstanceHostname}
+      - spring.datasource.password=${dbPwd}
